@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Generador de QR</title>
+	<script type="text/javascript" src="https://unpkg.com/qrious@4.0.2/dist/qrious.js"></script>
+	<style type="text/css">
+		*{
+			padding: 0px;
+			margin: 0px;
+			box-sizing: border-box;
+			font-family: arial;
+		}
+		label{
+			margin: 10px;
+			display: block;
+		}
+		.caja{
+			padding: 5px;
+			border: 1px solid #c2c2c2;
+			border-radius: 5px;
+		}
+		.btn{
+			margin: 10px;
+		}
+		.canvas{
+			margin: 10px;
+		}
+	</style>
+</head>
+<body>
+
+	<section class="content-form">
+		<label>
+			Librería:
+			<a href="https://github.com/neocotic/qrious">https://github.com/neocotic/qrious</a>
+		</label>
+		<label>
+			Color de fondo:
+			<input type="text" class="caja" id="color-fondo" value="white">
+		</label>
+		<label>
+			Color de cuadros:
+			<input type="text" class="caja" id="color-cuadros" value="black">
+		</label>
+		<label>
+			Nivel:
+			<select class="caja" id="level">
+				<option value="L">L</option>
+				<option value="M">M</option>
+				<option value="Q">Q</option>
+				<option value="H" selected>H</option>
+			</select>
+		</label>
+		<label>
+			Relleno:
+			<input type="number" class="caja" id="padding" value="10">
+		</label>
+		<label>
+			Tamaño (pixels):
+			<input type="number" class="caja" id="size" value="200">
+		</label>
+		<label>
+			Valor:
+			<input type="text" class="caja" id="value">
+		</label>
+		<button class="btn" id="btn-generar">Generar</button>
+	</section>
+
+	<canvas id="canvas"></canvas>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+document.getElementById('btn-generar').addEventListener('click',()=>{
+	this.generar();
+});
+
+function generar(){
+	let canvas=document.getElementById('canvas');
+	let qr=new QRious({
+		element: canvas,
+		background: document.getElementById('color-fondo').value,
+		foreground: document.getElementById('color-cuadros').value,
+		level: document.getElementById('level').value,
+		padding: document.getElementById('padding').value,
+		size: document.getElementById('size').value,
+		value: document.getElementById('value').value
+	});
+	canvas.addEventListener('click',()=>{
+		window.location=qr.toDataURL();
+	});
+}
+
+</script>
